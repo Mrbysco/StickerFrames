@@ -1,0 +1,48 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_glow_ink_sac": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:glow_ink_sac"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_sticker_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "stickerframes:sticker_frame"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "stickerframes:glow_sticker_frame"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_sticker_frame",
+      "has_glow_ink_sac",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "stickerframes:glow_sticker_frame"
+    ]
+  },
+  "sends_telemetry_event": false
+}

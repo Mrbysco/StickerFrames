@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "minecraft:item_frame"
+    },
+    "X": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XFX",
+    "XXX"
+  ],
+  "result": {
+    "item": "stickerframes:gui_sticker_frame"
+  },
+  "show_notification": true
+}

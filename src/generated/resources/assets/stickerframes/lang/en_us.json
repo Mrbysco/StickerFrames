@@ -1,0 +1,13 @@
+{
+  "enchantment.stickerframes.foiled": "Foiled",
+  "enchantment.stickerframes.foiled.desc": "Just enables the enchantment glint",
+  "entity.stickerframes.glow_gui_sticker_frame": "Glow GUI Sticker Frame",
+  "entity.stickerframes.glow_sticker_frame": "Glow Sticker Frame",
+  "entity.stickerframes.gui_sticker_frame": "GUI Sticker Frame",
+  "entity.stickerframes.sticker_frame": "Sticker Frame",
+  "item.stickerframes.glow_gui_sticker_frame": "Glow GUI Sticker Frame",
+  "item.stickerframes.glow_sticker_frame": "Glow Sticker Frame",
+  "item.stickerframes.gui_sticker_frame": "GUI Sticker Frame",
+  "item.stickerframes.sticker_frame": "Sticker Frame",
+  "itemGroup.stickerframes": "Sticker Frames"
+}

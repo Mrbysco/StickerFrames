@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[46,)"
+issueTrackerURL="https://github.com/Mrbysco/StickerFrames/issues"
+license="MIT"
+
+[[mods]]
+modId="stickerframes"
+version="${file.jarVersion}"
+displayName="Sticker Frames"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/sticker-frames"
+authors="Mrbysco"
+description='''
+A mod that adds item frames that render whatever is in them flat as a sticker.
+'''
+
+[[dependencies.stickerframes]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20,1.21)"
+ordering="NONE"
+side="BOTH"
