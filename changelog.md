@@ -1,1 +1,1 @@
-* Initial release 
+* Fix Sticker Frame dropping Glow Sticker Frame
