@@ -47,7 +47,7 @@ public class StickerFrame extends ItemFrame implements IEntityAdditionalSpawnDat
 
 	@Override
 	protected ItemStack getFrameItemStack() {
-		return new ItemStack(FrameRegistry.GLOW_STICKER_FRAME_ITEM.get());
+		return new ItemStack(FrameRegistry.STICKER_FRAME_ITEM.get());
 	}
 
 	public boolean isGlowing() {
