@@ -3,16 +3,11 @@ package com.mrbysco.stickerframes.entity;
 import com.mrbysco.stickerframes.registry.FrameRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
 
 public class GlowStickerFrame extends StickerFrame {
 	public GlowStickerFrame(EntityType<? extends StickerFrame> entityType, Level level) {
@@ -21,14 +16,6 @@ public class GlowStickerFrame extends StickerFrame {
 
 	public GlowStickerFrame(Level level, BlockPos pos, Direction facingDirection) {
 		super(FrameRegistry.GLOW_STICKER_FRAME.get(), level, pos, facingDirection);
-	}
-
-	public GlowStickerFrame(PlayMessages.SpawnEntity spawnEntity, Level level) {
-		this(FrameRegistry.GLOW_STICKER_FRAME.get(), level);
-	}
-
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override

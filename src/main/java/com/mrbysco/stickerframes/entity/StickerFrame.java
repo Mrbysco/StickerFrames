@@ -4,17 +4,13 @@ import com.mrbysco.stickerframes.registry.FrameRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
+import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 
-public class StickerFrame extends ItemFrame implements IEntityAdditionalSpawnData {
+public class StickerFrame extends ItemFrame implements IEntityWithComplexSpawn {
 	public StickerFrame(EntityType<? extends StickerFrame> entityType, Level level) {
 		super(entityType, level);
 	}
@@ -25,14 +21,6 @@ public class StickerFrame extends ItemFrame implements IEntityAdditionalSpawnDat
 
 	public StickerFrame(EntityType<? extends StickerFrame> entityType, Level level, BlockPos pos, Direction facingDirection) {
 		super(entityType, level, pos, facingDirection);
-	}
-
-	public StickerFrame(PlayMessages.SpawnEntity spawnEntity, Level level) {
-		this(FrameRegistry.STICKER_FRAME.get(), level);
-	}
-
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
@@ -47,7 +35,7 @@ public class StickerFrame extends ItemFrame implements IEntityAdditionalSpawnDat
 
 	@Override
 	protected ItemStack getFrameItemStack() {
-		return new ItemStack(FrameRegistry.GLOW_STICKER_FRAME_ITEM.get());
+		return new ItemStack(FrameRegistry.STICKER_FRAME_ITEM.get());
 	}
 
 	public boolean isGlowing() {

@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[46,)"
+loaderVersion="[2,)"
 issueTrackerURL="https://github.com/Mrbysco/StickerFrames/issues"
 license="MIT"
 
@@ -15,7 +15,13 @@ A mod that adds item frames that render whatever is in them flat as a sticker.
 
 [[dependencies.stickerframes]]
 modId="minecraft"
-mandatory=true
-versionRange="[1.20,1.21)"
+type="REQUIRED"
+versionRange="[1.20.4,1.21)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.stickerframes]]
+modId="neoforge"
+type="REQUIRED"
+versionRange="[20.4.70-beta,)"
 ordering="NONE"
 side="BOTH"

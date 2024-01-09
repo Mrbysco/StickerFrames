@@ -1,1 +1,1 @@
-* Initial release 
+* Initial update to 1.20.4 (NeoForge)

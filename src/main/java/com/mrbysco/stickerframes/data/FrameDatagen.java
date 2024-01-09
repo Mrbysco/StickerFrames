@@ -3,25 +3,26 @@ package com.mrbysco.stickerframes.data;
 
 import com.mrbysco.stickerframes.StickerFrames;
 import com.mrbysco.stickerframes.registry.FrameRegistry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -33,7 +34,7 @@ public class FrameDatagen {
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeServer()) {
-			generator.addProvider(true, new Recipes(packOutput));
+			generator.addProvider(true, new Recipes(packOutput, event.getLookupProvider()));
 		}
 		if (event.includeClient()) {
 			generator.addProvider(true, new Language(packOutput));
@@ -42,12 +43,12 @@ public class FrameDatagen {
 	}
 
 	private static class Recipes extends RecipeProvider {
-		public Recipes(PackOutput packOutput) {
-			super(packOutput);
+		public Recipes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+			super(packOutput, lookupProvider);
 		}
 
 		@Override
-		protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+		protected void buildRecipes(RecipeOutput recipeOutput) {
 			ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, FrameRegistry.STICKER_FRAME_ITEM.get())
 					.pattern("XXX")
 					.pattern("XFX")
@@ -55,13 +56,13 @@ public class FrameDatagen {
 					.define('X', Ingredient.of(Tags.Items.RODS_WOODEN))
 					.define('F', Items.PAINTING)
 					.unlockedBy("has_painting", has(Items.PAINTING))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, FrameRegistry.GLOW_STICKER_FRAME_ITEM.get())
 					.requires(FrameRegistry.STICKER_FRAME_ITEM.get())
 					.requires(Items.GLOW_INK_SAC)
 					.unlockedBy("has_sticker_frame", has(FrameRegistry.STICKER_FRAME_ITEM.get()))
 					.unlockedBy("has_glow_ink_sac", has(Items.GLOW_INK_SAC))
-					.save(consumer);
+					.save(recipeOutput);
 
 			ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, FrameRegistry.GUI_STICKER_FRAME_ITEM.get())
 					.pattern("XXX")
@@ -70,13 +71,13 @@ public class FrameDatagen {
 					.define('X', Ingredient.of(Tags.Items.RODS_WOODEN))
 					.define('F', Items.ITEM_FRAME)
 					.unlockedBy("has_item_frame", has(Items.ITEM_FRAME))
-					.save(consumer);
+					.save(recipeOutput);
 			ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, FrameRegistry.GLOW_GUI_STICKER_FRAME_ITEM.get())
 					.requires(FrameRegistry.GUI_STICKER_FRAME_ITEM.get())
 					.requires(Items.GLOW_INK_SAC)
 					.unlockedBy("has_gui_sticker_frame", has(FrameRegistry.GUI_STICKER_FRAME_ITEM.get()))
 					.unlockedBy("has_glow_ink_sac", has(Items.GLOW_INK_SAC))
-					.save(consumer);
+					.save(recipeOutput);
 		}
 	}
 

@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_item_frame",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_item_frame"
     ]
   ],
   "rewards": {
     "recipes": [
       "stickerframes:gui_sticker_frame"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
