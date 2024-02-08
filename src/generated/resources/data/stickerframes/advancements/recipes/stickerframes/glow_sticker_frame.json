@@ -43,6 +43,5 @@
     "recipes": [
       "stickerframes:glow_sticker_frame"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

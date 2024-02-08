@@ -24,7 +24,8 @@ public class GuiStickerFrame extends StickerFrame {
 		this(FrameRegistry.GUI_STICKER_FRAME.get(), level);
 	}
 
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+	@Override
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

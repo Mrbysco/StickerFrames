@@ -1,12 +1,13 @@
 package com.mrbysco.stickerframes.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import com.mrbysco.stickerframes.entity.StickerFrame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -18,7 +19,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,10 +26,10 @@ import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
 
 public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer<T> {
-	private static final ModelResourceLocation FRAME_LOCATION = ModelResourceLocation.vanilla("item_frame", "map=false");
-	private static final ModelResourceLocation MAP_FRAME_LOCATION = ModelResourceLocation.vanilla("item_frame", "map=true");
-	private static final ModelResourceLocation GLOW_FRAME_LOCATION = ModelResourceLocation.vanilla("glow_item_frame", "map=false");
-	private static final ModelResourceLocation GLOW_MAP_FRAME_LOCATION = ModelResourceLocation.vanilla("glow_item_frame", "map=true");
+	private static final ModelResourceLocation FRAME_LOCATION = new ModelResourceLocation("item_frame", "map=false");
+	private static final ModelResourceLocation MAP_FRAME_LOCATION = new ModelResourceLocation("item_frame", "map=true");
+	private static final ModelResourceLocation GLOW_FRAME_LOCATION = new ModelResourceLocation("glow_item_frame", "map=false");
+	private static final ModelResourceLocation GLOW_MAP_FRAME_LOCATION = new ModelResourceLocation("glow_item_frame", "map=true");
 	private final ItemRenderer itemRenderer;
 	private final BlockRenderDispatcher blockRenderer;
 
@@ -50,8 +50,8 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 		Vec3 vec3 = this.getRenderOffset(entity, partialTicks);
 		poseStack.translate(-vec3.x(), -vec3.y(), -vec3.z());
 		poseStack.translate((double) direction.getStepX() * 0.46875D, (double) direction.getStepY() * 0.46875D, (double) direction.getStepZ() * 0.46875D);
-		poseStack.mulPose(Axis.XP.rotationDegrees(entity.getXRot()));
-		poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - entity.getYRot()));
+		poseStack.mulPose(Vector3f.XP.rotationDegrees(entity.getXRot()));
+		poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - entity.getYRot()));
 		boolean flag = entity.isInvisible() || !entity.getItem().isEmpty();
 		ItemStack itemstack = entity.getItem();
 		if (!flag) {
@@ -64,14 +64,14 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 		}
 
 		if (!itemstack.isEmpty()) {
-			MapItemSavedData mapitemsaveddata = MapItem.getSavedData(itemstack, entity.level());
+			MapItemSavedData mapitemsaveddata = MapItem.getSavedData(itemstack, entity.getLevel());
 			poseStack.translate(0.0F, 0.0F, 0.499F);
 
 			int j = mapitemsaveddata != null ? entity.getRotation() % 4 * 2 : entity.getRotation();
-			poseStack.mulPose(Axis.ZP.rotationDegrees((float) j * 360.0F / 8.0F));
+			poseStack.mulPose(Vector3f.ZP.rotationDegrees((float) j * 360.0F / 8.0F));
 
 			if (mapitemsaveddata != null) {
-				poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
 				poseStack.scale(0.0078125F, 0.0078125F, 0.0078125F);
 				poseStack.translate(-64.0F, -64.0F, 0.0F);
 				poseStack.translate(0.0F, 0.0F, -1.0F);
@@ -81,20 +81,20 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 				}
 			} else {
 				int k = this.getLightVal(entity, 15728880, packetLight);
-				ItemDisplayContext displayContext = this.getDisplayContext(entity);
+				ItemTransforms.TransformType displayContext = this.getDisplayContext(entity);
 				poseStack.scale(0.5F, 0.5F, 0.001F);
-				if (displayContext == ItemDisplayContext.GUI) {
-					poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+				if (displayContext == ItemTransforms.TransformType.GUI) {
+					poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
 				}
-				this.itemRenderer.renderStatic(itemstack, displayContext, k, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, entity.level(), entity.getId());
+				this.itemRenderer.renderStatic(itemstack, displayContext, k, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, entity.getId());
 			}
 		}
 
 		poseStack.popPose();
 	}
 
-	private ItemDisplayContext getDisplayContext(T entity) {
-		return entity.usesGuiDisplay() ? ItemDisplayContext.GUI : ItemDisplayContext.FIXED;
+	private ItemTransforms.TransformType getDisplayContext(T entity) {
+		return entity.usesGuiDisplay() ? ItemTransforms.TransformType.GUI : ItemTransforms.TransformType.FIXED;
 	}
 
 	private int getLightVal(T stickerFrame, int glowLightVal, int regularLightVal) {

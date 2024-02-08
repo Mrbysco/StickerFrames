@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_painting": {
+    "has_item_frame": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:painting"
+              "minecraft:item_frame"
             ]
           }
         ]
@@ -15,21 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "stickerframes:sticker_frame"
+        "recipe": "stickerframes:gui_sticker_frame"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_painting",
+      "has_item_frame",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "stickerframes:sticker_frame"
+      "stickerframes:gui_sticker_frame"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

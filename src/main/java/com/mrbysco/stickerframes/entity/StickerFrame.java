@@ -31,7 +31,8 @@ public class StickerFrame extends ItemFrame implements IEntityAdditionalSpawnDat
 		this(FrameRegistry.STICKER_FRAME.get(), level);
 	}
 
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+	@Override
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

@@ -20,7 +20,6 @@ public class StickerFrames {
 
 		FrameRegistry.ITEMS.register(eventBus);
 		FrameRegistry.ENTITY_TYPES.register(eventBus);
-		FrameRegistry.CREATIVE_MODE_TABS.register(eventBus);
 		FrameRegistry.ENCHANTMENTS.register(eventBus);
 
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {

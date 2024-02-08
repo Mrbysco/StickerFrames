@@ -27,7 +27,8 @@ public class GlowStickerFrame extends StickerFrame {
 		this(FrameRegistry.GLOW_STICKER_FRAME.get(), level);
 	}
 
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+	@Override
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

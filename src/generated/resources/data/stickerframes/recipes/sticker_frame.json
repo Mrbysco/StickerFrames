@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "F": {
       "item": "minecraft:painting"
@@ -16,6 +15,5 @@
   ],
   "result": {
     "item": "stickerframes:sticker_frame"
-  },
-  "show_notification": true
+  }
 }

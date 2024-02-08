@@ -5,30 +5,22 @@ import com.mrbysco.stickerframes.entity.GlowStickerFrame;
 import com.mrbysco.stickerframes.entity.GuiStickerFrame;
 import com.mrbysco.stickerframes.entity.StickerFrame;
 import com.mrbysco.stickerframes.registry.FrameRegistry;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.HangingEntity;
-import net.minecraft.world.entity.decoration.Painting;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 
-import javax.annotation.Nullable;
-import java.util.List;
 import java.util.function.Supplier;
 
 public class HangingItem extends Item {
-	private static final Component TOOLTIP_RANDOM_VARIANT = Component.translatable("painting.random").withStyle(ChatFormatting.GRAY);
 	private final Supplier<EntityType<? extends HangingEntity>> typeSupplier;
 
 	public HangingItem(Supplier<EntityType<? extends HangingEntity>> typeSupplier, Item.Properties pProperties) {
@@ -90,30 +82,5 @@ public class HangingItem extends Item {
 
 	protected boolean mayPlace(Player player, Direction direction, ItemStack hangingStack, BlockPos pos) {
 		return !direction.getAxis().isVertical() && player.mayUseItemAt(pos, direction, hangingStack);
-	}
-
-	/**
-	 * Allows items to add custom lines of information to the mouseover description.
-	 */
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> componentList, TooltipFlag flag) {
-		super.appendHoverText(stack, level, componentList, flag);
-		if (getType() == EntityType.PAINTING) {
-			CompoundTag compoundtag = stack.getTag();
-			if (compoundtag != null && compoundtag.contains("EntityTag", 10)) {
-				CompoundTag compoundtag1 = compoundtag.getCompound("EntityTag");
-				Painting.loadVariant(compoundtag1).ifPresentOrElse((p_270767_) -> {
-					p_270767_.unwrapKey().ifPresent((p_270217_) -> {
-						componentList.add(Component.translatable(p_270217_.location().toLanguageKey("painting", "title")).withStyle(ChatFormatting.YELLOW));
-						componentList.add(Component.translatable(p_270217_.location().toLanguageKey("painting", "author")).withStyle(ChatFormatting.GRAY));
-					});
-					componentList.add(Component.translatable("painting.dimensions", Mth.positiveCeilDiv(p_270767_.value().getWidth(), 16), Mth.positiveCeilDiv(p_270767_.value().getHeight(), 16)));
-				}, () -> {
-					componentList.add(TOOLTIP_RANDOM_VARIANT);
-				});
-			} else if (flag.isCreative()) {
-				componentList.add(TOOLTIP_RANDOM_VARIANT);
-			}
-		}
-
 	}
 }

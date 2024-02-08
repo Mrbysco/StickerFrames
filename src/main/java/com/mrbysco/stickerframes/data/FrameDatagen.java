@@ -4,9 +4,7 @@ package com.mrbysco.stickerframes.data;
 import com.mrbysco.stickerframes.StickerFrames;
 import com.mrbysco.stickerframes.registry.FrameRegistry;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -29,26 +27,25 @@ public class FrameDatagen {
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent event) {
 		DataGenerator generator = event.getGenerator();
-		PackOutput packOutput = generator.getPackOutput();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeServer()) {
-			generator.addProvider(true, new Recipes(packOutput));
+			generator.addProvider(true, new Recipes(generator));
 		}
 		if (event.includeClient()) {
-			generator.addProvider(true, new Language(packOutput));
-			generator.addProvider(true, new ItemModels(packOutput, helper));
+			generator.addProvider(true, new Language(generator));
+			generator.addProvider(true, new ItemModels(generator, helper));
 		}
 	}
 
 	private static class Recipes extends RecipeProvider {
-		public Recipes(PackOutput packOutput) {
-			super(packOutput);
+		public Recipes(DataGenerator generator) {
+			super(generator);
 		}
 
 		@Override
-		protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-			ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, FrameRegistry.STICKER_FRAME_ITEM.get())
+		protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+			ShapedRecipeBuilder.shaped(FrameRegistry.STICKER_FRAME_ITEM.get())
 					.pattern("XXX")
 					.pattern("XFX")
 					.pattern("XXX")
@@ -56,14 +53,14 @@ public class FrameDatagen {
 					.define('F', Items.PAINTING)
 					.unlockedBy("has_painting", has(Items.PAINTING))
 					.save(consumer);
-			ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, FrameRegistry.GLOW_STICKER_FRAME_ITEM.get())
+			ShapelessRecipeBuilder.shapeless(FrameRegistry.GLOW_STICKER_FRAME_ITEM.get())
 					.requires(FrameRegistry.STICKER_FRAME_ITEM.get())
 					.requires(Items.GLOW_INK_SAC)
 					.unlockedBy("has_sticker_frame", has(FrameRegistry.STICKER_FRAME_ITEM.get()))
 					.unlockedBy("has_glow_ink_sac", has(Items.GLOW_INK_SAC))
 					.save(consumer);
 
-			ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, FrameRegistry.GUI_STICKER_FRAME_ITEM.get())
+			ShapedRecipeBuilder.shaped(FrameRegistry.GUI_STICKER_FRAME_ITEM.get())
 					.pattern("XXX")
 					.pattern("XFX")
 					.pattern("XXX")
@@ -71,7 +68,7 @@ public class FrameDatagen {
 					.define('F', Items.ITEM_FRAME)
 					.unlockedBy("has_item_frame", has(Items.ITEM_FRAME))
 					.save(consumer);
-			ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, FrameRegistry.GLOW_GUI_STICKER_FRAME_ITEM.get())
+			ShapelessRecipeBuilder.shapeless(FrameRegistry.GLOW_GUI_STICKER_FRAME_ITEM.get())
 					.requires(FrameRegistry.GUI_STICKER_FRAME_ITEM.get())
 					.requires(Items.GLOW_INK_SAC)
 					.unlockedBy("has_gui_sticker_frame", has(FrameRegistry.GUI_STICKER_FRAME_ITEM.get()))
@@ -81,8 +78,8 @@ public class FrameDatagen {
 	}
 
 	private static class Language extends LanguageProvider {
-		public Language(PackOutput packOutput) {
-			super(packOutput, StickerFrames.MOD_ID, "en_us");
+		public Language(DataGenerator generator) {
+			super(generator, StickerFrames.MOD_ID, "en_us");
 		}
 
 		@Override
@@ -109,8 +106,8 @@ public class FrameDatagen {
 	}
 
 	private static class ItemModels extends ItemModelProvider {
-		public ItemModels(PackOutput packOutput, ExistingFileHelper helper) {
-			super(packOutput, StickerFrames.MOD_ID, helper);
+		public ItemModels(DataGenerator generator, ExistingFileHelper helper) {
+			super(generator, StickerFrames.MOD_ID, helper);
 		}
 
 		@Override
