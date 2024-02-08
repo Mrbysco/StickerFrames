@@ -1,1 +1,1 @@
-* Fix Sticker Frame dropping Glow Sticker Frame
+* Backport to 1.19.2
