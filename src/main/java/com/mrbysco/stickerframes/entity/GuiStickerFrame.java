@@ -21,6 +21,7 @@ public class GuiStickerFrame extends StickerFrame {
 		return new ItemStack(FrameRegistry.GUI_STICKER_FRAME_ITEM.get());
 	}
 
+	@Override
 	public boolean usesGuiDisplay() {
 		return true;
 	}

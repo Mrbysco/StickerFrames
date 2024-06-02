@@ -3,7 +3,7 @@ package com.mrbysco.stickerframes.entity;
 import com.mrbysco.stickerframes.registry.FrameRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.ItemStack;
@@ -24,12 +24,12 @@ public class StickerFrame extends ItemFrame implements IEntityWithComplexSpawn {
 	}
 
 	@Override
-	public void writeSpawnData(FriendlyByteBuf buffer) {
+	public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
 		buffer.writeInt(this.direction.get3DDataValue());
 	}
 
 	@Override
-	public void readSpawnData(FriendlyByteBuf additionalData) {
+	public void readSpawnData(RegistryFriendlyByteBuf additionalData) {
 		this.setDirection(Direction.from3DDataValue(additionalData.readInt()));
 	}
 

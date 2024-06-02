@@ -23,26 +23,32 @@ public class GlowStickerFrame extends StickerFrame {
 		return new ItemStack(FrameRegistry.GLOW_STICKER_FRAME_ITEM.get());
 	}
 
+	@Override
 	public SoundEvent getRemoveItemSound() {
 		return SoundEvents.GLOW_ITEM_FRAME_REMOVE_ITEM;
 	}
 
+	@Override
 	public SoundEvent getBreakSound() {
 		return SoundEvents.GLOW_ITEM_FRAME_BREAK;
 	}
 
+	@Override
 	public SoundEvent getPlaceSound() {
 		return SoundEvents.GLOW_ITEM_FRAME_PLACE;
 	}
 
+	@Override
 	public SoundEvent getAddItemSound() {
 		return SoundEvents.GLOW_ITEM_FRAME_ADD_ITEM;
 	}
 
+	@Override
 	public SoundEvent getRotateItemSound() {
 		return SoundEvents.GLOW_ITEM_FRAME_ROTATE_ITEM;
 	}
 
+	@Override
 	public boolean isGlowing() {
 		return true;
 	}

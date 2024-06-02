@@ -6,10 +6,11 @@ import com.mrbysco.stickerframes.entity.GlowGuiStickerFrame;
 import com.mrbysco.stickerframes.entity.GlowStickerFrame;
 import com.mrbysco.stickerframes.entity.GuiStickerFrame;
 import com.mrbysco.stickerframes.entity.StickerFrame;
-import com.mrbysco.stickerframes.item.StickerFrameItem;
+import com.mrbysco.stickerframes.item.StickerFrameItemCustom;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobCategory;
@@ -18,7 +19,6 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -31,14 +31,19 @@ public class FrameRegistry {
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, StickerFrames.MOD_ID);
 	public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(Registries.ENCHANTMENT, StickerFrames.MOD_ID);
 
-	public static final EnchantmentCategory ALL = EnchantmentCategory.create(StickerFrames.MOD_ID + ":all", i -> true);
+	public static final Supplier<Enchantment> FOILED = ENCHANTMENTS.register(
+			"foiled",
+			() -> new FoilEnchantment(
+					Enchantment.definition(ItemTags.VANISHING_ENCHANTABLE, 5, 1,
+							Enchantment.constantCost(10),
+							Enchantment.constantCost(30), 1, EquipmentSlot.values())
+			)
+	);
 
-	public static final Supplier<Enchantment> FOILED = ENCHANTMENTS.register("foiled", () -> new FoilEnchantment(Enchantment.Rarity.UNCOMMON, ALL, EquipmentSlot.values()));
-
-	public static final DeferredItem<StickerFrameItem> STICKER_FRAME_ITEM = ITEMS.register("sticker_frame", () -> new StickerFrameItem(FrameRegistry.STICKER_FRAME::get, new Item.Properties()));
-	public static final DeferredItem<StickerFrameItem> GLOW_STICKER_FRAME_ITEM = ITEMS.register("glow_sticker_frame", () -> new StickerFrameItem(FrameRegistry.GLOW_STICKER_FRAME::get, new Item.Properties()));
-	public static final DeferredItem<StickerFrameItem> GUI_STICKER_FRAME_ITEM = ITEMS.register("gui_sticker_frame", () -> new StickerFrameItem(FrameRegistry.GUI_STICKER_FRAME::get, new Item.Properties()));
-	public static final DeferredItem<StickerFrameItem> GLOW_GUI_STICKER_FRAME_ITEM = ITEMS.register("glow_gui_sticker_frame", () -> new StickerFrameItem(FrameRegistry.GLOW_GUI_STICKER_FRAME::get, new Item.Properties()));
+	public static final DeferredItem<StickerFrameItemCustom> STICKER_FRAME_ITEM = ITEMS.register("sticker_frame", () -> new StickerFrameItemCustom(FrameRegistry.STICKER_FRAME.get(), new Item.Properties()));
+	public static final DeferredItem<StickerFrameItemCustom> GLOW_STICKER_FRAME_ITEM = ITEMS.register("glow_sticker_frame", () -> new StickerFrameItemCustom(FrameRegistry.GLOW_STICKER_FRAME.get(), new Item.Properties()));
+	public static final DeferredItem<StickerFrameItemCustom> GUI_STICKER_FRAME_ITEM = ITEMS.register("gui_sticker_frame", () -> new StickerFrameItemCustom(FrameRegistry.GUI_STICKER_FRAME.get(), new Item.Properties()));
+	public static final DeferredItem<StickerFrameItemCustom> GLOW_GUI_STICKER_FRAME_ITEM = ITEMS.register("glow_gui_sticker_frame", () -> new StickerFrameItemCustom(FrameRegistry.GLOW_GUI_STICKER_FRAME.get(), new Item.Properties()));
 
 	public static final Supplier<EntityType<StickerFrame>> STICKER_FRAME = ENTITY_TYPES.register("sticker_frame", () ->
 			EntityType.Builder.<StickerFrame>of(StickerFrame::new, MobCategory.MISC)

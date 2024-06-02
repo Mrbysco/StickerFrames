@@ -15,6 +15,7 @@ import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -39,10 +40,12 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 		this.blockRenderer = context.getBlockRenderDispatcher();
 	}
 
+	@Override
 	protected int getBlockLightLevel(T stickerFrame, BlockPos pos) {
 		return stickerFrame.isGlowing() ? Math.max(5, super.getBlockLightLevel(stickerFrame, pos)) : super.getBlockLightLevel(stickerFrame, pos);
 	}
 
+	@Override
 	public void render(T entity, float yaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packetLight) {
 		super.render(entity, yaw, partialTicks, poseStack, bufferSource, packetLight);
 		poseStack.pushPose();
@@ -77,7 +80,8 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 				poseStack.translate(0.0F, 0.0F, -1.0F);
 				if (mapitemsaveddata != null) {
 					int i = this.getLightVal(entity, 15728850, packetLight);
-					Minecraft.getInstance().gameRenderer.getMapRenderer().render(poseStack, bufferSource, entity.getFramedMapId().getAsInt(), mapitemsaveddata, true, i);
+					Minecraft.getInstance().gameRenderer.getMapRenderer().render(poseStack, bufferSource, entity.getFramedMapId(), mapitemsaveddata, true, i);
+
 				}
 			} else {
 				int k = this.getLightVal(entity, 15728880, packetLight);
@@ -110,6 +114,7 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 		}
 	}
 
+	@Override
 	public Vec3 getRenderOffset(T entity, float partialTicks) {
 		return new Vec3((double) ((float) entity.getDirection().getStepX() * 0.3F), -0.25D, (double) ((float) entity.getDirection().getStepZ() * 0.3F));
 	}
@@ -117,12 +122,14 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 	/**
 	 * Returns the location of an entity's texture.
 	 */
+	@Override
 	public ResourceLocation getTextureLocation(T entity) {
 		return InventoryMenu.BLOCK_ATLAS;
 	}
 
+	@Override
 	protected boolean shouldShowName(T entity) {
-		if (Minecraft.renderNames() && !entity.getItem().isEmpty() && entity.getItem().hasCustomHoverName() && this.entityRenderDispatcher.crosshairPickEntity == entity) {
+		if (Minecraft.renderNames() && !entity.getItem().isEmpty() && entity.getItem().has(DataComponents.CUSTOM_NAME) && this.entityRenderDispatcher.crosshairPickEntity == entity) {
 			double d0 = this.entityRenderDispatcher.distanceToSqr(entity);
 			float f = entity.isDiscrete() ? 32.0F : 64.0F;
 			return d0 < (double) (f * f);
@@ -131,7 +138,8 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 		}
 	}
 
-	protected void renderNameTag(T entity, Component displayName, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-		super.renderNameTag(entity, entity.getItem().getHoverName(), poseStack, bufferSource, packedLight);
+	@Override
+	protected void renderNameTag(T entity, Component displayName, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, float partialTick) {
+		super.renderNameTag(entity, entity.getItem().getHoverName(), poseStack, bufferSource, packedLight, partialTick);
 	}
 }

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:glow_ink_sac"
-            ]
+            "items": "minecraft:glow_ink_sac"
           }
         ]
       },
@@ -17,9 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "stickerframes:sticker_frame"
-            ]
+            "items": "stickerframes:sticker_frame"
           }
         ]
       },
