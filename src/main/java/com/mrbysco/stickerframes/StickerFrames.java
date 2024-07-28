@@ -17,7 +17,6 @@ public class StickerFrames {
 		FrameRegistry.ITEMS.register(eventBus);
 		FrameRegistry.ENTITY_TYPES.register(eventBus);
 		FrameRegistry.CREATIVE_MODE_TABS.register(eventBus);
-		FrameRegistry.ENCHANTMENTS.register(eventBus);
 
 		if (dist.isClient()) {
 			eventBus.addListener(ClientHandler::registerEntityRenders);

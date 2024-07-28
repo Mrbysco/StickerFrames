@@ -9,12 +9,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class StickerFrameItemCustom extends CustomHangingEntityItem {
-	public StickerFrameItemCustom(EntityType<? extends StickerFrame> entityTypeSupplier, Item.Properties pProperties) {
-		super(entityTypeSupplier, pProperties);
+	public StickerFrameItemCustom(EntityType<? extends StickerFrame> entityType, Item.Properties properties) {
+		super(entityType, properties);
 	}
 
 	@Override
-	protected boolean mayPlace(Player pPlayer, Direction pDirection, ItemStack pItemStack, BlockPos pPos) {
-		return !pPlayer.level().isOutsideBuildHeight(pPos) && pPlayer.mayUseItemAt(pPos, pDirection, pItemStack);
+	protected boolean mayPlace(Player player, Direction direction, ItemStack hangingEntityStack, BlockPos pos) {
+		return !player.level().isOutsideBuildHeight(pos) && player.mayUseItemAt(pos, direction, hangingEntityStack);
 	}
 }

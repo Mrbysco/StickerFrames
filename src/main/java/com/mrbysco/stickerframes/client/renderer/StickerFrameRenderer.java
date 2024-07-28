@@ -80,7 +80,7 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 				poseStack.translate(0.0F, 0.0F, -1.0F);
 				if (mapitemsaveddata != null) {
 					int i = this.getLightVal(entity, 15728850, packetLight);
-					Minecraft.getInstance().gameRenderer.getMapRenderer().render(poseStack, bufferSource, entity.getFramedMapId(), mapitemsaveddata, true, i);
+					Minecraft.getInstance().gameRenderer.getMapRenderer().render(poseStack, bufferSource, entity.getFramedMapId(itemstack), mapitemsaveddata, true, i);
 
 				}
 			} else {

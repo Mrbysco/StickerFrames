@@ -1,0 +1,20 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.stickerframes.foiled"
+  },
+  "max_cost": {
+    "base": 30,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 10,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "any"
+  ],
+  "supported_items": "#minecraft:enchantable/vanishing",
+  "weight": 5
+}
