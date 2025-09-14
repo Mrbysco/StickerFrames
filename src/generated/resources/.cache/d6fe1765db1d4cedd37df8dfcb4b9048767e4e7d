@@ -1,9 +1,9 @@
-// 1.21.1	2025-09-14T22:15:30.6827298	Recipes
+// 1.21.4	2025-09-14T22:36:51.7642658	StickerFrames Recipes
 598511b1c1a12ee5a18ccf867bb0a04b12a613f0 data/stickerframes/advancement/recipes/decorations/glow_gui_sticker_frame.json
 79bead7db8f7a56ad961799f7787cdd4fd16673b data/stickerframes/advancement/recipes/decorations/glow_sticker_frame.json
 8f95d496ad9cf63c6479fb7a1186754b3db39ade data/stickerframes/advancement/recipes/decorations/gui_sticker_frame.json
 d312f7502fe2770e9d4b5dbd384eacbbf787b941 data/stickerframes/advancement/recipes/decorations/sticker_frame.json
-13fed7196d583e4dcc54b610204cee6eb4543d32 data/stickerframes/recipe/glow_gui_sticker_frame.json
-156125b1795b9e7b8d54df7f71f5b7c91c081dfa data/stickerframes/recipe/glow_sticker_frame.json
-bacf82740b5a70857a445b82c2e4c5292cc02e0e data/stickerframes/recipe/gui_sticker_frame.json
-66ef9bfbab0ee5491ab62f4a1136f253431ade68 data/stickerframes/recipe/sticker_frame.json
+7fd12efa87cf7e7f244a012f9c36b6939c0b3482 data/stickerframes/recipe/glow_gui_sticker_frame.json
+fc5b2c275944bc708e21ae98d0e22aff0bdc4a5e data/stickerframes/recipe/glow_sticker_frame.json
+334632c3c704f2171a13cc44f23dec02bc4c2936 data/stickerframes/recipe/gui_sticker_frame.json
+8ca2fd924286e75bb12bc11552925d1ac274d1b3 data/stickerframes/recipe/sticker_frame.json

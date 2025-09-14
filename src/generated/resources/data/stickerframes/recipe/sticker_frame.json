@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "F": {
-      "item": "minecraft:painting"
-    },
-    "X": {
-      "tag": "c:rods/wooden"
-    }
+    "F": "minecraft:painting",
+    "X": "#c:rods/wooden"
   },
   "pattern": [
     "XXX",

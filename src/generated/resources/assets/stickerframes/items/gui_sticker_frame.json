@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "stickerframes:item/gui_sticker_frame"
+  }
+}

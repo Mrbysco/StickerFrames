@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "stickerframes:gui_sticker_frame"
-    },
-    {
-      "item": "minecraft:glow_ink_sac"
-    }
+    "stickerframes:gui_sticker_frame",
+    "minecraft:glow_ink_sac"
   ],
   "result": {
     "count": 1,

@@ -53,7 +53,7 @@ public class CustomHangingEntityItem extends HangingEntityItem {
 				} else if (this.type == FrameRegistry.GLOW_GUI_STICKER_FRAME.get()) {
 					hangingentity = new GlowGuiStickerFrame(level, relativePos, clickedFace);
 				} else {
-					return InteractionResult.sidedSuccess(level.isClientSide);
+					return InteractionResult.SUCCESS;
 				}
 			}
 
@@ -70,7 +70,7 @@ public class CustomHangingEntityItem extends HangingEntityItem {
 				}
 
 				itemstack.shrink(1);
-				return InteractionResult.sidedSuccess(level.isClientSide);
+				return InteractionResult.SUCCESS;
 			} else {
 				return InteractionResult.CONSUME;
 			}
