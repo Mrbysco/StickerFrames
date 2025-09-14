@@ -25,7 +25,7 @@ public class StickerFrame extends ItemFrame implements IEntityWithComplexSpawn {
 
 	@Override
 	public void writeSpawnData(RegistryFriendlyByteBuf buffer) {
-		buffer.writeInt(this.direction.get3DDataValue());
+		buffer.writeInt(this.getDirection().get3DDataValue());
 	}
 
 	@Override
