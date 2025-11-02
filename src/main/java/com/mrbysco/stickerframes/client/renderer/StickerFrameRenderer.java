@@ -6,14 +6,14 @@ import com.mrbysco.stickerframes.client.state.StickerFrameRenderState;
 import com.mrbysco.stickerframes.entity.StickerFrame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MapRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.BlockStateDefinitions;
@@ -44,8 +44,8 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 	}
 
 	@Override
-	public void render(StickerFrameRenderState renderState, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-		super.render(renderState, poseStack, bufferSource, packedLight);
+	public void submit(StickerFrameRenderState renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
+		super.submit(renderState, poseStack, nodeCollector, cameraRenderState);
 		poseStack.pushPose();
 		Direction direction = renderState.direction;
 		Vec3 vec3 = this.getRenderOffset(renderState);
@@ -68,15 +68,16 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 			BlockStateModel blockstatemodel = this.blockRenderer.getBlockModel(blockstate);
 			poseStack.pushPose();
 			poseStack.translate(-0.5F, -0.5F, -0.5F);
-			ModelBlockRenderer.renderModel(
-					poseStack.last(),
-					bufferSource.getBuffer(RenderType.entitySolidZOffsetForward(TextureAtlas.LOCATION_BLOCKS)),
+			nodeCollector.submitBlockModel(
+					poseStack,
+					RenderType.entitySolidZOffsetForward(TextureAtlas.LOCATION_BLOCKS),
 					blockstatemodel,
 					1.0F,
 					1.0F,
 					1.0F,
-					packedLight,
-					OverlayTexture.NO_OVERLAY
+					renderState.lightCoords,
+					OverlayTexture.NO_OVERLAY,
+					renderState.outlineColor
 			);
 			poseStack.popPose();
 		}
@@ -94,16 +95,16 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 			poseStack.scale(0.0078125F, 0.0078125F, 0.0078125F);
 			poseStack.translate(-64.0F, -64.0F, 0.0F);
 			poseStack.translate(0.0F, 0.0F, -1.0F);
-			int lightCoords = this.getLightCoords(renderState.isGlowFrame, 15728850, packedLight);
-			this.mapRenderer.render(renderState.mapRenderState, poseStack, bufferSource, true, lightCoords);
+			int lightCoords = this.getLightCoords(renderState.isGlowFrame, 15728850, renderState.lightCoords);
+			this.mapRenderer.render(renderState.mapRenderState, poseStack, nodeCollector, true, lightCoords);
 		} else if (!renderState.item.isEmpty()) {
 			poseStack.mulPose(Axis.ZP.rotationDegrees((float) renderState.rotation * 360.0F / 8.0F));
-			int lightCoords = this.getLightCoords(renderState.isGlowFrame, 15728880, packedLight);
+			int lightCoords = this.getLightCoords(renderState.isGlowFrame, 15728880, renderState.lightCoords);
 			poseStack.scale(0.5F, 0.5F, 0.001F);
 			if (renderState.displayContext == ItemDisplayContext.GUI) {
 				poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
 			}
-			renderState.item.render(poseStack, bufferSource, lightCoords, OverlayTexture.NO_OVERLAY);
+			renderState.item.submit(poseStack, nodeCollector, lightCoords, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
 		}
 
 		poseStack.popPose();

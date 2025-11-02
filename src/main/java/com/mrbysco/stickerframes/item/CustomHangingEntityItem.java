@@ -14,7 +14,7 @@ import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.HangingEntityItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.TypedEntityData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -57,13 +57,13 @@ public class CustomHangingEntityItem extends HangingEntityItem {
 				}
 			}
 
-			CustomData customdata = itemstack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
-			if (!customdata.isEmpty()) {
-				EntityType.updateCustomEntityTag(level, player, hangingentity, customdata);
+			TypedEntityData<EntityType<?>> typedentitydata = itemstack.get(DataComponents.ENTITY_DATA);
+			if (typedentitydata != null && !typedentitydata.getUnsafe().isEmpty()) {
+				EntityType.updateCustomEntityTag(level, player, hangingentity, typedentitydata);
 			}
 
 			if (hangingentity.survives()) {
-				if (!level.isClientSide) {
+				if (!level.isClientSide()) {
 					hangingentity.playPlacementSound();
 					level.gameEvent(player, GameEvent.ENTITY_PLACE, hangingentity.position());
 					level.addFreshEntity(hangingentity);
