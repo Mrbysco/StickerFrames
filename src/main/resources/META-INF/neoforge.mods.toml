@@ -15,13 +15,13 @@ A mod that adds item frames that render whatever is in them flat as a sticker.
 
 [[dependencies.stickerframes]]
 modId="minecraft"
-type="REQUIRED"
-versionRange="[1.21.11,1.22)"
+type="required"
+versionRange="[26.1.1,)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.stickerframes]]
 modId="neoforge"
 type="required"
-versionRange="[21.11.0-beta,)"
+versionRange="[26.1.1.0-alpha,)"
 ordering="NONE"
 side="BOTH"

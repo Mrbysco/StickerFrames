@@ -7,21 +7,16 @@ import com.mrbysco.stickerframes.entity.StickerFrame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MapRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.renderer.block.BlockModelResolver;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.resources.model.BlockStateDefinitions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
@@ -29,13 +24,13 @@ import net.minecraft.world.phys.Vec3;
 public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer<T, StickerFrameRenderState> {
 	private final ItemModelResolver itemModelResolver;
 	private final MapRenderer mapRenderer;
-	private final BlockRenderDispatcher blockRenderer;
+	private final BlockModelResolver blockModelResolver;
 
 	public StickerFrameRenderer(EntityRendererProvider.Context context) {
 		super(context);
 		this.itemModelResolver = context.getItemModelResolver();
 		this.mapRenderer = context.getMapRenderer();
-		this.blockRenderer = context.getBlockRenderDispatcher();
+		this.blockModelResolver = context.getBlockModelResolver();
 	}
 
 	@Override
@@ -64,21 +59,18 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 		poseStack.mulPose(Axis.XP.rotationDegrees(f));
 		poseStack.mulPose(Axis.YP.rotationDegrees(f1));
 		if (!renderState.isInvisible) {
-			BlockState blockstate = BlockStateDefinitions.getItemFrameFakeState(renderState.isGlowFrame, renderState.mapId != null);
-			BlockStateModel blockstatemodel = this.blockRenderer.getBlockModel(blockstate);
 			poseStack.pushPose();
 			poseStack.translate(-0.5F, -0.5F, -0.5F);
-			nodeCollector.submitBlockModel(
-					poseStack,
-					RenderTypes.entitySolidZOffsetForward(TextureAtlas.LOCATION_BLOCKS),
-					blockstatemodel,
-					1.0F,
-					1.0F,
-					1.0F,
-					renderState.lightCoords,
-					OverlayTexture.NO_OVERLAY,
-					renderState.outlineColor
-			);
+
+			if (!renderState.frameModel.isEmpty()) {
+				renderState.frameModel.submit(
+						poseStack,
+						nodeCollector,
+						renderState.lightCoords,
+						OverlayTexture.NO_OVERLAY,
+						renderState.outlineColor
+				);
+			}
 			poseStack.popPose();
 		}
 
@@ -148,6 +140,12 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 					renderState.mapId = mapid;
 				}
 			}
+		}
+
+		if (!renderState.isInvisible) {
+			this.blockModelResolver.updateForItemFrame(renderState.frameModel, renderState.isGlowFrame, renderState.mapId != null);
+		} else {
+			renderState.frameModel.clear();
 		}
 	}
 }
