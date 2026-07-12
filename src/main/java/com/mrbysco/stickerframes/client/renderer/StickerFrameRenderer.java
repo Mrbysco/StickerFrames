@@ -6,13 +6,13 @@ import com.mrbysco.stickerframes.client.state.StickerFrameRenderState;
 import com.mrbysco.stickerframes.entity.StickerFrame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MapRenderer;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -70,7 +70,7 @@ public class StickerFrameRenderer<T extends StickerFrame> extends EntityRenderer
 			poseStack.translate(-0.5F, -0.5F, -0.5F);
 			nodeCollector.submitBlockModel(
 					poseStack,
-					RenderType.entitySolidZOffsetForward(TextureAtlas.LOCATION_BLOCKS),
+					RenderTypes.entitySolidZOffsetForward(TextureAtlas.LOCATION_BLOCKS),
 					blockstatemodel,
 					1.0F,
 					1.0F,

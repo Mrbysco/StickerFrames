@@ -18,8 +18,8 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.tags.EnchantmentTagsProvider;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -162,12 +162,12 @@ public class FrameDatagen {
 		}
 
 		private void addEnchantment(ResourceKey<Enchantment> key, String name) {
-			ResourceLocation location = key.location();
+			Identifier location = key.identifier();
 			add("enchantment." + location.getNamespace() + "." + location.getPath(), name);
 		}
 
 		private void addEnchantmentDescription(ResourceKey<Enchantment> key, String description) {
-			ResourceLocation location = key.location();
+			Identifier location = key.identifier();
 			add("enchantment." + location.getNamespace() + "." + location.getPath() + ".desc", description);
 		}
 	}
